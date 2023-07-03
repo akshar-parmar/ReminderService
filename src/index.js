@@ -3,19 +3,22 @@ const bodyParser = require('body-parser');
 const {PORT} = require('./config/serverConfig');
 //const bodyParser} = require('body-parser');
 const {sendBasicEmail} = require('./services/email-service');
+const jobs = require('./utils/jobs');
+const TicketController = require('./controller/ticket-controller');
+
 
 const setUpServer = ()=>{
     const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}));
+    app.post('/api/v1/tickets',TicketController.create);
+    
+    
+    
     app.listen(PORT,async()=>{
         console.log(`Server started at PORT ${PORT}`);
-        // sendBasicEmail(
-        //     'support@admin.com',   //from
-        //     'sampletest5854@gmail.com', //to
-        //     'This is a testing email',  //subject
-        //     'Hey, how are you, I hope you like the support'  //body
-        // );
+        //jobs();
+       
     });
 };
 setUpServer();
